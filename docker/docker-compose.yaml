@@ -138,6 +138,7 @@ x-shared-env: &shared-api-worker-env
   MILVUS_TOKEN: ${MILVUS_TOKEN:-}
   MILVUS_USER: ${MILVUS_USER:-root}
   MILVUS_PASSWORD: ${MILVUS_PASSWORD:-Milvus}
+  MILVUS_ENABLE_HYBRID_SEARCH: ${MILVUS_ENABLE_HYBRID_SEARCH:-False}
   MYSCALE_HOST: ${MYSCALE_HOST:-myscale}
   MYSCALE_PORT: ${MYSCALE_PORT:-8123}
   MYSCALE_USER: ${MYSCALE_USER:-default}
@@ -392,7 +393,7 @@ x-shared-env: &shared-api-worker-env
 services:
   # API service
   api:
-    image: langgenius/dify-api:0.15.0
+    image: langgenius/dify-api:0.15.1
     restart: always
     environment:
       # Use the shared environment variables.
@@ -416,7 +417,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:0.15.0
+    image: langgenius/dify-api:0.15.1
     restart: always
     environment:
       # Use the shared environment variables.
@@ -439,7 +440,7 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:0.15.0
+    image: langgenius/dify-web:0.15.1
     restart: always
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}
@@ -803,7 +804,7 @@ services:
 
   milvus-standalone:
     container_name: milvus-standalone
-    image: milvusdb/milvus:v2.3.1
+    image: milvusdb/milvus:v2.5.0-beta
     profiles:
       - milvus
     command: [ 'milvus', 'run', 'standalone' ]
